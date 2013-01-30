@@ -1,0 +1,17 @@
+{% extends '::layout.html.twig' %}
+
+{% block body_container_center %}
+<div class="container-fluid">
+<div class="span10">
+	<img src="{{ vich_uploader_asset(foto, 'image') }}" class="fotoalbum" />
+</div>
+<div class="span2">
+		Aquí van comentario y demás historias.
+	</div>
+</div>
+<hr>
+{% endblock %}
+
+{% block body_container_right %}
+	{{ parent() }}	
+{% endblock %}

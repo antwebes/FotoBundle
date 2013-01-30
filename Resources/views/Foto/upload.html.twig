@@ -1,0 +1,28 @@
+{% extends 'FotoBundle::layout.html.twig' %}
+
+{% block body_container_center %} 
+	<h1>Subir Foto</h1>
+	<hr>
+	<form class="form-horizontal" action="{{ path('publicar_foto') }}" method="post" {{ form_enctype(form) }}>
+	<div class="control-group">
+		<label class="control-label" for="input01">
+		{{ form_label(form.titulo) }} 
+		</label>
+		<div class="controls">
+		{{ form_widget(form.titulo) }}
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="input01">
+		{{ form_label(form.image) }} 
+		</label>
+		<div class="controls">
+		{{ form_widget(form.image) }}
+		</div>
+	</div>
+	    {{ form_widget(form) }}
+	<div class="controls">
+	    <input type="submit" class="submit, btn-primary" value="Subir Foto" />
+	</div>
+	</form>
+{% endblock %}

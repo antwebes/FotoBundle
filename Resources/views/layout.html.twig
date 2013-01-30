@@ -1,0 +1,35 @@
+{% extends '::layout.html.twig' %}
+	
+{% block body_container_main %}
+              
+				<div class="container-fluid">
+  					<div class="row-fluid">
+   
+              		<div class="span2">
+              		{% block body_container_left %}					
+						{% if app.user %}
+							<div class="alert alert-success">
+							<button class="close" data-dismiss="alert">&times;</button>
+							<strong>Hola</strong> {{ app.user }}
+							{% if app.user.perfil is empty %}
+								<hr>	
+								<a href="{{path('publicar_perfil') }}">Crea tu perfil.</a>
+							{% endif %}
+							{% if app.user.imagenPerfil is empty %}
+								<hr>
+								<a href="{{path('publicar_foto_perfil') }}">Añade foto perfil.</a>	
+							{% endif %}
+							</div>
+						{% endif %}
+					{% endblock %}
+					</div>
+					<div class="span8">
+					{% block body_container_center %}
+    				    				
+
+					{% endblock %}
+					</div>
+					
+			 		</div>
+				</div>		
+{% endblock %}

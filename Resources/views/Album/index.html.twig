@@ -1,0 +1,115 @@
+{% extends '::layout.html.twig' %}
+
+{% block body_container_main %}
+<div class="row-fluid">
+	<div class="span10">
+		<div class="row-fluid">
+		  <div class="span10">
+		  	<center><h1>Este es tu album de fotos.</h1> Puedes publicar una foto desde aquí.</center>
+		  </div>
+		  <div class="span2">
+		  	<a href="{{path('publicar_foto')}}" class="btn btn-primary pull-right">Publicar foto</a>
+		  </div>
+		</div>
+	</div>
+</div>
+
+{% for foto in fotos %}
+<div id="wrapper">
+<div id="columns">
+<div class="pin" id="pin{{ foto.id }}">	
+		<div class="btn-group">
+		  <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">
+		    <i class="icon-pencil"></i>Editar
+		    <span class="caret"></span>
+		  </a>
+		  <ul class="dropdown-menu">
+		    <li><a class="edit" data-id="{{ foto.id }}">Cambiar título</a></li>
+		    <li class="divider"></li>
+		    <li><a class="elim" data-id="{{ foto.id }}">Eliminar</a></li>
+		  </ul>
+		</div>	
+         <a class="clearfix" href="{{path('foto_index', {'id': foto.id} )}}">
+			<img id="foto{{ foto.id }}" src="{{ vich_uploader_asset(foto, 'image') }}" class="fotoalbum" />
+        </a> 
+        {#
+        <div class="metafoto"><a href="" class="pull-rigth"><i class="icon-comment"></i> 0 Comentarios</a> <a class="pull-right" href=""><i class="icon-thumbs-up"></i>12 Megusta</a></div>
+		<p id="ftit{{ foto.id }}">{{ foto.titulo }}</p>
+        #}
+</div>
+</div>
+</div>
+{% else %}
+<div class="container-fluid">
+<div class="row-fluid">
+	<div class="span12" style="margin-top:2em;">
+	<div class="alert alert-block">
+    <h4>Aún no has compartido ninguna foto</h4>
+    ¿A que esperas? Seguro que tienes alguna foto de un evento para compartir.
+    </div>
+   </div>
+</div>
+</div>
+{% endfor %}
+
+
+
+{% endblock %}
+
+	{% block body_js_final %}
+	{% javascripts '@FotoBundle/Resources/public/js/vendor/bootbox.js' %}
+		<script src="{{ asset_url }}"></script>
+		{{ parent() }}   
+	{% endjavascripts %}
+		<script>
+		$(document).ready(function(){
+			$(".elim").click(function(){
+			var id =$(this).data("id");	
+			var foto_url = "{{ app.request.uriForPath('/foto/')}}" + id;
+			var foto = $("#foto"+id);	
+
+                bootbox.confirm("¿Está seguro de que desea eliminar esta foto?<br /><br /><center><img src=\""+ foto.attr("src")+"\" width=\"120px\" /></center>", function(confirmed) {
+                    if(confirmed) {
+            			$.ajax({
+          				  type: "DELETE",
+          				  url: foto_url
+          				}).done(function( msg ) {
+          					$("#pin"+id).hide();
+          					//$("#pin"+id).remove();
+          				});
+                    }
+                });
+
+			});
+			$(".edit").click(function(){
+				var id =$(this).data("id");	
+				var foto_url = "{{ app.request.uriForPath('/foto/')}}" + id;
+				var foto = $("#foto"+id);	
+				 bootbox.prompt("Titulo de la foto", function(result) {
+	                    if(result) {
+	            			$.ajax({
+	          				  type: "PUT",
+	          				  url: foto_url,
+	          				  data: {foto: {titulo: result}}
+	          				}).done(function( msg ) {
+		          				console.log(msg);
+	          					$("#ftit"+id).html(msg.foto.titulo);
+	          					//$("#pin"+id).remove();
+	          				});
+	                    }
+	                });
+
+				});			
+		});
+
+		require([
+		         // Load our app module and pass it to our definition function
+		         'app',
+
+		       ], function(App){
+		         // The "app" dependency is passed in as "App"
+		         // Again, the other dependencies passed in are not "AMD" therefore don't pass a parameter to this function
+		         App.initialize();
+		       });		
+		</script>	
+{% endblock %}		

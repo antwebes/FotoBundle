@@ -1,0 +1,24 @@
+{% extends '::layout.html.twig' %}
+
+{% block body_container_main %}
+<center><h1>Estas son las fotos publicadas por {{ usuario }}</h1></center>
+<hr>
+<div id="wrapper">
+<div id="columns">
+{% for foto in fotos %}
+<div class="pin" id="pin{{ foto.id }}">	
+		
+         <a class="clearfix" href="{{path('foto_index', {'id': foto.id} )}}">
+			<img id="foto{{ foto.id }}" src="{{ vich_uploader_asset(foto, 'image') }}" class="fotoalbum" />
+        </a> 
+        <div class="metafoto"><a href="" class="pull-rigth"><i class="icon-comment"></i> 0 Comentarios</a> <a class="pull-right" href=""><i class="icon-thumbs-up"></i>12 Megusta</a></div>
+		<p id="ftit{{ foto.id }}">{{ foto.titulo }}</p>
+        
+</div>
+{% else %}
+	Este usuario no ha publicado ninguna foto por el momento.
+{% endfor %}
+</div>
+</div>
+
+{% endblock %}

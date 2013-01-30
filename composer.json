@@ -1,0 +1,25 @@
+{
+    "name": "antwebes/foto-bundle",
+    "type": "symfony-bundle",
+    "description": "Foto Bundle for symfony2",
+    "keywords": ["badge"],
+    "homepage": "https://github.com/antwebes/FotoBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ping86",
+            "homepage": "https://github.com/antwebes"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "require-dev": {
+        "symfony/framework-bundle": ">=2.1,<2.2-dev"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": { "ant\\FotoBundle": "" }
+    },
+    "target-dir": "ant/FotoBundle"
+}

@@ -1,0 +1,10 @@
+{% for foto in fotos %}
+	Publicada el {{ foto.fechaPublicacion | date }}
+	<a href="{{path('foto_index', {'id': foto.id} )}}">
+	{# <img src="{{ vich_uploader_asset(foto, 'image') }}" alt="{{ foto.imageName }}" /> #}
+	<img src="{{ asset( 'uploads/' | apply_filter('album')) }}{{ path }}{{ foto.imageName }}" />
+	</a>
+	<hr>
+{% else %}
+	Este usuario no ha publicado ninguna foto por el momento.
+{% endfor %}
