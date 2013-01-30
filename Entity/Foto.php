@@ -1,18 +1,13 @@
 <?php
 
-namespace chatea\FotoBundle\Entity;
+namespace ant\FotoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @ORM\Table(name="Foto")
- * @ORM\Entity
- * @Vich\Uploadable
- * @ORM\Entity(repositoryClass="chatea\FotoBundle\Entity\FotoRepository")
- */
-class Foto {
+
+abstract class Foto {
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
@@ -54,12 +49,7 @@ class Foto {
 	 * @var File $imagenPerfil
 	 */
 	public $imagenPerfil;
-	/**
-	 * @ORM\ManyToOne(targetEntity="chatea\UsuarioBundle\Entity\User", inversedBy="fotos")
-	 * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
-	 */
-	//usuario_id nombre en la base de datos que relaciona con la columna id del usuario
-	protected $usuario;
+	
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
 	 *

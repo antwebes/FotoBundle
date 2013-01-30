@@ -1,6 +1,6 @@
 <?php
 
-namespace chatea\FotoBundle\Controller;
+namespace ant\FotoBundle\Controller;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

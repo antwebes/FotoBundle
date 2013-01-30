@@ -1,6 +1,6 @@
 <?php
 
-namespace chatea\FotoBundle\Entity;
+namespace ant\FotoBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 

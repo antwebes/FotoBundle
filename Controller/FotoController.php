@@ -1,6 +1,6 @@
 <?php
 
-namespace chatea\FotoBundle\Controller;
+namespace ant\FotoBundle\Controller;
 
 use chatea\FotoBundle\Form\FotoType;
 use Symfony\Component\HttpKernel\Exception\HttpException;
