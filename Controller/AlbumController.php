@@ -16,14 +16,14 @@ class AlbumController extends Controller
     	$fotos = $em->getRepository('FotoBundle:Foto')->findFotosUsuario($u);
     	//ldd($fotos);
     	//if (!$fotos) throw new NotFoundHttpException();
-        return $this->render('FotoBundle:Album:index.html.twig', array('fotos' => $fotos));
+        return $this->render('AntFotoBundle:Album:index.html.twig', array('fotos' => $fotos));
     }
     public function indexAmigoAction($username)
     {
     	$em = $this->getDoctrine()->getManager();
     	$u = $em->getRepository('UsuarioBundle:User')->findOneByUsername($username);
     	$fotos = $em->getRepository('FotoBundle:Foto')->findFotosUsuario($u);
-    	return $this->render('FotoBundle:Album:indexAmigo.html.twig', array('fotos' => $fotos, 'usuario' => $u));
+    	return $this->render('AntFotoBundle:Album:indexAmigo.html.twig', array('fotos' => $fotos, 'usuario' => $u));
     }
    
 }

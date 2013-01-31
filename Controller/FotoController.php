@@ -2,10 +2,10 @@
 
 namespace ant\FotoBundle\Controller;
 
-use chatea\FotoBundle\Form\FotoType;
+use ant\FotoBundle\Form\FotoType;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use chatea\FotoBundle\Entity\Foto;
+use ant\FotoBundle\Entity\Foto;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use ant\SocialBundle\Model\NotificacionInterface;
@@ -90,12 +90,18 @@ class FotoController extends Controller
      */
     public function uploadAction()
     {
-    	$form = $this->get('form.factory')->create(new FotoType());
+    	$formFactory = $this->get('ant_foto.form.factory');
+    	$fotoManager = $this->get('ant_foto.foto_manager');
+    	$foto = $fotoManager->createFoto();
+    	$form = $formFactory->createForm();
+    	$form->setData($foto);
+    	//$form = $this->get('form.factory')->create(new FotoType());
     	
     	if ($this->getRequest()->isMethod('POST')) {
     		$form->bind($this->getRequest());
     		if ($form->isValid()) {
-    			$foto = $form->getData();
+    			//$foto = $form->getData();
+    			ldd($foto);
     			$em = $this->getDoctrine()->getManager();    			
     			$u = $this->get('security.context')->getToken()->getUser();
     			$this->get('ant_social.NotificacionManager')->crearNotificacion($u, NotificacionInterface::FOTO, $foto);

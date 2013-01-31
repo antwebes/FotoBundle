@@ -1,13 +1,19 @@
 <?php
 
-namespace chatea\FotoBundle\Form;
+namespace ant\FotoBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class FotoType extends AbstractType{
 
+	private $fotoClass;
+	
+	public function __construct($fotoClass)
+	{
+		$this->fotoClass = $fotoClass;
+	}
 public function buildForm(FormBuilderInterface $builder, array $options)
 {
 	$builder->add('titulo')
@@ -19,15 +25,21 @@ public function buildForm(FormBuilderInterface $builder, array $options)
 		;
 	}
 
-	public function getDefaultOptions(array $options)
+	/*public function getDefaultOptions(array $options)
 	{
 		return array(
-		'data_class' => 'chatea\FotoBundle\Entity\Foto'
+		'data_class' => 'ant\FotoBundle\Entity\Foto'
 		);
+	}*/
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	{
+		$resolver->setDefaults(array(
+				'intention'  => 'foto',
+				'data_class' => $this->fotoClass,
+		));
 	}
-	
 	public function getName()
 	{
-		return 'Foto';
+		return 'ant_foto_type';
 	}
 }

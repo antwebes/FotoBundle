@@ -1,7 +1,8 @@
 parameters:
 #    foto.example.class: chatea\FotoBundle\Example
+    ant_foto.class: chatea\FotoBundle\Entity\Foto
 
 services:
-#    foto.example:
-#        class: %foto.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    ant_foto.foto_form.type:
+        class: ant\FotoBundle\Form\FotoType
+        arguments: [%ant_foto.class%]

@@ -1,34 +1,34 @@
 foto_index:
     pattern:  /foto/{id}
-    defaults: { _controller: FotoBundle:Foto:index }
+    defaults: { _controller: AntFotoBundle:Foto:index }
     requirements:
         _method: GET
         id: "\d+"
 foto_path:
     pattern: /img/{path}
-    defaults: { _controller: FotoBundle:Foto:fotoPath }
+    defaults: { _controller: AntFotoBundle:Foto:fotoPath }
         
 foto_edit:
     pattern:  /foto/{id}
-    defaults: { _controller: FotoBundle:Foto:editar, _format: ~ }
+    defaults: { _controller: AntFotoBundle:Foto:editar, _format: ~ }
     requirements:
         _method: PUT
         id: "\d+"
          
 publicar_foto:
     pattern: /foto/
-    defaults: { _controller: FotoBundle:Foto:upload }
+    defaults: { _controller: AntFotoBundle:Foto:upload }
     
 borrar_foto:
     pattern: /foto/{id}
-    defaults: { _controller: FotoBundle:Foto:delete }
+    defaults: { _controller: AntFotoBundle:Foto:delete }
     requirements:
         _method: DELETE
         id: "\d+"
     
 album:
     pattern: /album
-    defaults: { _controller: FotoBundle:Album:index }
+    defaults: { _controller: AntFotoBundle:Album:index }
 album_amigo:
     pattern: /{username}/album
-    defaults: { _controller: FotoBundle:Album:indexAmigo }
+    defaults: { _controller: AntFotoBundle:Album:indexAmigo }

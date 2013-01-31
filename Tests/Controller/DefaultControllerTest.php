@@ -1,6 +1,6 @@
 <?php
 
-namespace chatea\FotoBundle\Tests\Controller;
+namespace ant\FotoBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
