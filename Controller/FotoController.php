@@ -2,6 +2,9 @@
 
 namespace ant\FotoBundle\Controller;
 
+use ant\FotoBundle\Event\AntFotoEvents;
+use ant\FotoBundle\Event\FotoEvent;
+
 use ant\FotoBundle\Form\FotoType;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,30 +23,7 @@ class FotoController extends Controller
 	 * @Rest\View
 	 */
     public function indexAction(Foto $foto)
-    {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$dispatcher = $this->container->get('event_dispatcher');
-    	$event = new BadgeEvent($em, 'chatea\ChatBundle\Entity\Sala');
-    	$dispatcher->dispatch(AntBadgeEvents::POST_PUBLISH, $event);
-    	/*
-    	$u = $this->get('security.context')->getToken()->getUser();
-    	$composer = $this->get('ant_badge.composer');
-    	
-    	$rank = $composer->newRank()
-    	->setcount(3)
-    	->setParticipant($u)
-    	//->setAcquired(true)
-    	->setWonAt(new \DateTime('now'))
-    	->getRank();/*
-    	$rank->setcount(3);
-    	$rank->setAcquired(1);
-    	//$rank->setParticipant($u);
-    	$rank->setWonAt(new \DateTime('now'));
-    	//ldd($rank);*/
-    	
-    	
-    	//$this->get('ant_badge.rank_manager')->saveRank($rank);
-    	
+    {    	
         return array('foto' => $foto);
     }
     /**
@@ -101,14 +81,16 @@ class FotoController extends Controller
     		$form->bind($this->getRequest());
     		if ($form->isValid()) {
     			//$foto = $form->getData();
-    			ldd($foto);
+    			
     			$em = $this->getDoctrine()->getManager();    			
     			$u = $this->get('security.context')->getToken()->getUser();
     			$this->get('ant_social.NotificacionManager')->crearNotificacion($u, NotificacionInterface::FOTO, $foto);
     			$foto->setUsuario($u);
     			$em->persist($foto);
         		$em->flush();
-        		
+        		//lanzamos un evento
+        		$dispatcher = $this->container->get('event_dispatcher');        		
+        		$dispatcher->dispatch(AntFotoEvents::POST_PUBLISH, new FotoEvent($foto));
         		//timeline
         		$this->get('ant_social.TimelineServicio')->crearAccion($u, 'foto', $foto);
     		}
