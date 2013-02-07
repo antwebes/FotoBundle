@@ -13,9 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use ant\SocialBundle\Model\NotificacionInterface;
 
-//use para probar el badgeBundle con eventos
-use ant\BadgeBundle\Event\BadgeEvent;
-use ant\BadgeBundle\Event\AntBadgeEvents;
 
 class FotoController extends Controller
 {
@@ -91,8 +88,7 @@ class FotoController extends Controller
         		//lanzamos un evento
         		$dispatcher = $this->container->get('event_dispatcher');        		
         		$dispatcher->dispatch(AntFotoEvents::POST_PUBLISH, new FotoEvent($foto));
-        		//timeline
-        		$this->get('ant_social.TimelineServicio')->crearAccion($u, 'foto', $foto);
+
     		}
     	}
     	return array('form' => $form->createView());

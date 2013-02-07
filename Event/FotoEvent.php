@@ -2,7 +2,7 @@
 
 namespace ant\FotoBundle\Event;
 
-use ant\FotoBundle\Entity\FotoInterface;
+use ant\FotoBundle\Entity\Foto;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\EventDispatcher\Event;
@@ -16,7 +16,7 @@ class FotoEvent extends Event
 	 */
 	private $foto;
 	
-	public function __construct(FotoInterface $foto)
+	public function __construct(Foto $foto)
 	{	
 		$this->foto = $foto;
 	}
