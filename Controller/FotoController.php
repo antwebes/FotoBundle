@@ -4,11 +4,10 @@ namespace ant\FotoBundle\Controller;
 
 use ant\FotoBundle\Event\AntFotoEvents;
 use ant\FotoBundle\Event\FotoEvent;
-
 use ant\FotoBundle\Form\FotoType;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use ant\FotoBundle\Entity\Foto;
+use ant\FotoBundle\Entity\Foto; 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use ant\SocialBundle\Model\NotificacionInterface;
@@ -19,8 +18,10 @@ class FotoController extends Controller
 	/**
 	 * @Rest\View
 	 */
-    public function indexAction(Foto $foto)
+    public function indexAction($id)
     {    	
+    	$fotoManager = $this->get('ant_foto.foto_manager');
+    	$foto = $fotoManager->findFotoBy(array('id'=>$id));
         return array('foto' => $foto);
     }
     /**

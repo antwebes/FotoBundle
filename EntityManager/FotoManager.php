@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ant\FotoBundle\Doctrine;
+namespace ant\FotoBundle\EntityManager;
 
 use Doctrine\ORM\EntityManager;
 //use FOS\UserBundle\Model\UserInterface;
@@ -63,7 +63,7 @@ class FotoManager //extends BaseUserManager
     /**
      * {@inheritDoc}
      */
-    public function findUserBy(array $criteria)
+    public function findFotoBy(array $criteria)
     {
         return $this->repository->findOneBy($criteria);
     }

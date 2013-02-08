@@ -9,7 +9,7 @@
         <parameter key="ant_foto.model_manager_name" />
     </parameters>
     <services>
-        <service id="ant_foto.foto_manager" class="ant\FotoBundle\Doctrine\FotoManager" public="true">
+        <service id="ant_foto.foto_manager" class="ant\FotoBundle\EntityManager\FotoManager" public="true">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument>%ant_foto.foto_class%</argument>
         </service>
