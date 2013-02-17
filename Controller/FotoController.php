@@ -89,7 +89,7 @@ class FotoController extends Controller
         		//lanzamos un evento
         		$dispatcher = $this->container->get('event_dispatcher');        		
         		$dispatcher->dispatch(AntFotoEvents::POST_PUBLISH, new FotoEvent($foto));
-
+        		return $this->redirect($this->generateUrl('album'), 301);
     		}
     	}
     	return array('form' => $form->createView());

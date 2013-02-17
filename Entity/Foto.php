@@ -40,6 +40,10 @@ abstract class Foto {
 	 */
 	protected $updatedAt;
 	/**
+	 * @var array
+	 */
+	protected $fotoComponents;
+	/**
 	 * @Assert\File(
 	 *     maxSize="2000k",
 	 *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg"}
@@ -68,6 +72,51 @@ abstract class Foto {
 	public function __construct()
 	{
 		$this->fecha_publicacion = new \DateTime('now');
+	}
+	/**
+	 * {@inheritdoc}
+	 */
+	public function addComponent($type, $component, $fotoComponentClass)
+	{
+		$fotoComponent = new $fotoComponentClass();
+		$fotoComponent->setType($type);
+	
+		if ($component instanceof ComponentInterface) {
+			$fotoComponent->setComponent($component);
+		} elseif (is_scalar($component)) {
+			$fotoComponent->setText($component);
+		} else {
+			throw new \InvalidArgumentException('Component has to be a ComponentInterface or a scalar');
+		}
+	
+		$this->addFotoComponent($fotoComponent);
+	
+		return $this;
+	}
+	/**
+	 * {@inheritdoc}
+	 */
+	public function addFotoComponent(FotoComponentInterface $fotoComponent)
+	{
+		$fotoComponent->setAction($this);
+		$type = $fotoComponent->getType();
+	
+		foreach ($this->getFotoComponents() as $key => $ac) {
+			if ($ac->getType() == $type) {
+				unset($this->fotoComponents[$key]);
+			}
+		}
+	
+		$this->fotoComponents[] = $fotoComponent;
+	
+		return $this;
+	}
+	/**
+	 * @return array
+	 */
+	public function getFotoComponents()
+	{
+		return $this->fotoComponents;
 	}
 	/**
 	 * Get id

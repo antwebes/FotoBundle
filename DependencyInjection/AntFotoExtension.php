@@ -30,6 +30,7 @@ class AntFotoExtension extends Extension
         $container->setParameter('ant_foto.foto_class', $config['foto_class']);
         $container->setParameter('ant_foto.form.name', $config['form']['name']);
         $container->setParameter('ant_foto.form.type', $config['form']['type']);
+        $container->setAlias('ant_foto.driver.object_manager', $config['object_manager']);
      //   $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
        // $loader->load('services.yml');
     }

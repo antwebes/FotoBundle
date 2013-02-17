@@ -17,6 +17,15 @@
         <service id="ant_foto.entity_manager" factory-service="doctrine" factory-method="getManager" class="Doctrine\ORM\EntityManager" public="true">
             <argument>%ant_foto.model_manager_name%</argument>
         </service>
+        <service id="ant_foto.action_manager.orm" class="%spy_timeline.action_manager.orm.class%">
+            <argument type="service" id="ant_foto.driver.object_manager" />
+            <argument>%ant_foto.foto.class%</argument>
+            <argument>ant\FotoBundle\Entity\Component</argument>
+            <argument>%ant_foto.action_component.class%</argument>
+            <!-- <argument>%ant_foto.component.class%</argument>
+            <argument>%ant_foto.action_component.class%</argument> -->
+            
+        </service>
 
     </services>
 

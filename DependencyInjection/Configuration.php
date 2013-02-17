@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
 	        ->children()
 	        	->scalarNode('db_driver')->cannotBeOverwritten()->isRequired()->cannotBeEmpty()->end()
 	        	->scalarNode('foto_class')->defaultValue('chatea\FotoBundle\Entity\Foto')->end()
+	        	->scalarNode('object_manager')->isRequired()->cannotBeEmpty()->end()
 	        ->end()
 	        ->children()	        	
 		        ->arrayNode('form')
