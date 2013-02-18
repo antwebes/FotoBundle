@@ -22,6 +22,14 @@ class FotoController extends Controller
     {    	
     	$fotoManager = $this->get('ant_foto.foto_manager');
     	$foto = $fotoManager->findFotoBy(array('id'=>$id));
+    	//fotoComponent
+    	$usuario = $this->get('security.context')->getToken()->getUser();
+    	$fotoManager = $this->get('ant_foto.action_manager.orm');
+    	$subject       = $fotoManager->findOrCreateComponent($usuario);
+    	$foto = $fotoManager->create($subject, 'foto', array('directComplement' => $foto));
+    	$fotoManager->updateAction($foto);
+    	ldd($usuario);
+    	//fin FotoComponent
         return array('foto' => $foto);
     }
     /**

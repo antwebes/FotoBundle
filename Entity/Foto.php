@@ -7,13 +7,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
-abstract class Foto {
+abstract class Foto implements FotoInterface {
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	protected $id;
+	
+	/**
+	 * @ORM\Column(type="string", length=255)	 
+	 */
+	protected $verb;
 
 	/**
 	 * @ORM\Column(type="string", length=255, name="image_name", nullable=true)	 
@@ -76,6 +81,23 @@ abstract class Foto {
 	/**
 	 * {@inheritdoc}
 	 */
+	public function setVerb($verb)
+	{
+		$this->verb = $verb;
+	
+		return $this;
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getVerb()
+	{
+		return $this->verb;
+	}
+	/**
+	 * {@inheritdoc}
+	 */
 	public function addComponent($type, $component, $fotoComponentClass)
 	{
 		$fotoComponent = new $fotoComponentClass();
@@ -98,7 +120,7 @@ abstract class Foto {
 	 */
 	public function addFotoComponent(FotoComponentInterface $fotoComponent)
 	{
-		$fotoComponent->setAction($this);
+		$fotoComponent->setFoto($this);
 		$type = $fotoComponent->getType();
 	
 		foreach ($this->getFotoComponents() as $key => $ac) {

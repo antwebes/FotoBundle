@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="ant_foto_foto_component")
  */
-class FotoComponent
+class FotoComponent implements FotoComponentInterface
 {
     /**
      * @ORM\Id
@@ -18,7 +18,7 @@ class FotoComponent
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ant\FotoBundle\Entity\Foto", inversedBy="fotoComponents")
+     * @ORM\ManyToOne(targetEntity="chatea\FotoBundle\Entity\Foto", inversedBy="fotoComponents")
      * @ORM\JoinColumn(name="foto_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $foto;
@@ -30,7 +30,7 @@ class FotoComponent
     protected $component;
     
     /**
-     * @var string
+     * @ORM\Column(type="string", length=255)
      */
     protected $type;
     

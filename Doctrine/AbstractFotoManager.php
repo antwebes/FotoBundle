@@ -2,12 +2,15 @@
 
 namespace ant\FotoBundle\Doctrine;
 
+
+use Doctrine\Common\Persistence\ObjectManager;
+
 /**
  * AbstractFotoManager
  *
  * @author Pablo  <pablo@antweb.es>
  */
-abstract class AbstractFotoManager
+class AbstractFotoManager
 {
 	/**
 	 * @var ObjectManager
@@ -182,14 +185,14 @@ abstract class AbstractFotoManager
 		}
 	
 		$component = $this->getComponentRepository()
-		->createQueryBuilder('c')
-		->where('c.model = :model')
-		->andWhere('c.identifier = :identifier')
-		->setParameter('model', $modelResolved)
-		->setParameter('identifier', serialize($identifierResolved))
-		->getQuery()
-		->getOneOrNullResult()
-		;
+			->createQueryBuilder('c')
+			->where('c.model = :model')
+			->andWhere('c.identifier = :identifier')
+			->setParameter('model', $modelResolved)
+			->setParameter('identifier', serialize($identifierResolved))
+			->getQuery()
+			->getOneOrNullResult()
+			;
 	
 		if ($component) {
 			$component->setData($data);
@@ -198,6 +201,26 @@ abstract class AbstractFotoManager
 		}
 	
 		return $this->createComponent($model, $identifier, $flush);
+	}
+	/**
+	 * {@inheritdoc}
+	 */
+	public function create($subject, $verb, array $components = array())
+	{
+		$foto = new $this->fotoClass();
+		$foto->setVerb($verb);
+	
+		if (!$subject instanceof ComponentInterface AND !is_object($subject)) {
+			throw new \Exception('Subject must be a ComponentInterface or an object');
+		}
+	
+		$components['subject'] = $subject;
+	
+		foreach ($components as $type => $component) {
+			$this->addComponent($foto, $type, $component);
+		}
+	
+		return $foto;
 	}
 	
 	protected function getComponentRepository()
