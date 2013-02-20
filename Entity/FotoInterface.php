@@ -78,5 +78,8 @@ interface FotoInterface {
      */
     public function getImagePerfilName();
 
+    public function getFotoComponents();
+    public function setVerb($verb);
+    public function getVerb();
     
 }

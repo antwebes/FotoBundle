@@ -89,7 +89,7 @@ class FotoComponent implements FotoComponentInterface
     /**
      * {@inheritdoc}
      */
-    public function setComponent(Component $component)
+    public function setComponent(ComponentInterface $component)
     {
     	$this->component = $component;
     

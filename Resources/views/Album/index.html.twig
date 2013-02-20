@@ -13,6 +13,8 @@
 		<div class="row-fluid">
 		  <div class="span10">
 		  	<center><h1>Este es tu album de fotos.</h1> Puedes publicar una foto desde aquí.</center>
+		  	<p><a href="{{path('ant_foto_album_labeled', {'id':app.user.id})}}">Ver fotos en las que has sido etiquetado.</a>
+			</p>
 		  </div>
 		  <div class="span2">
 		  	<a href="{{path('publicar_foto')}}" class="btn btn-primary pull-right">Publicar foto</a>
@@ -78,6 +80,7 @@
                 bootbox.confirm("¿Está seguro de que desea eliminar esta foto?<br /><br /><center><img src=\""+ foto.attr("src")+"\" width=\"120px\" /></center>", function(confirmed) {
                     if(confirmed) {
             			$.ajax({
+                		  dataType: "json",
           				  type: "DELETE",
           				  url: foto_url
           				}).done(function( msg ) {

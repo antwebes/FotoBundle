@@ -26,8 +26,10 @@ class AntFotoExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('form.xml');
         $loader->load('orm.xml');
+        $loader->load('user.xml');
         
         $container->setParameter('ant_foto.foto_class', $config['foto_class']);
+        $container->setParameter('ant_foto.user_class', $config['user_class']);
         $container->setParameter('ant_foto.form.name', $config['form']['name']);
         $container->setParameter('ant_foto.form.type', $config['form']['type']);
         $container->setAlias('ant_foto.driver.object_manager', $config['object_manager']);

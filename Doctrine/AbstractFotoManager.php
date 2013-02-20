@@ -3,6 +3,10 @@
 namespace ant\FotoBundle\Doctrine;
 
 
+use ant\FotoBundle\Entity\ComponentInterface;
+
+use ant\FotoBundle\Entity\FotoInterface;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -159,14 +163,16 @@ class AbstractFotoManager
 	 */
 	public function addComponent($foto, $type, $component)
 	{
+	
 		if (!$component instanceof ComponentInterface && !is_scalar($component)) {
+			
 			$component = $this->findOrCreateComponent($component);
 	
 			if (null === $component) {
 				throw new \Exception(sprintf('Impossible to create component from %s.', $type));
 			}
 		}
-	
+		
 		$foto->addComponent($type, $component, $this->fotoComponentClass);
 	}
 	/**
@@ -174,6 +180,7 @@ class AbstractFotoManager
 	 */
 	public function findOrCreateComponent($model, $identifier = null, $flush = true)
 	{
+		
 		list ($modelResolved, $identifierResolved, $data) = $this->resolveModelAndIdentifier($model, $identifier);
 	
 		if (empty($modelResolved) || null === $identifierResolved || '' === $identifierResolved) {
@@ -193,7 +200,7 @@ class AbstractFotoManager
 			->getQuery()
 			->getOneOrNullResult()
 			;
-	
+
 		if ($component) {
 			$component->setData($data);
 	
@@ -207,25 +214,63 @@ class AbstractFotoManager
 	 */
 	public function create($subject, $verb, array $components = array())
 	{
-		$foto = new $this->fotoClass();
-		$foto->setVerb($verb);
-	
+		//$foto = new $this->fotoClass();
+		//$foto->setVerb($verb);
+		$foto=$subject;
 		if (!$subject instanceof ComponentInterface AND !is_object($subject)) {
 			throw new \Exception('Subject must be a ComponentInterface or an object');
 		}
 	
-		$components['subject'] = $subject;
-	
+		//$components['subject'] = $subject;
 		foreach ($components as $type => $component) {
 			$this->addComponent($foto, $type, $component);
 		}
 	
 		return $foto;
 	}
+	/**
+	 * {@inheritdoc}
+	 */
+	public function updateAction(FotoInterface $foto)
+	{
+		$this->objectManager->persist($foto);
+		$this->objectManager->flush();
+	}
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getQueryBuilderForComponent(ComponentInterface $component){
+	
+		return $this->objectManager
+			->getRepository($this->fotoClass)
+			->createQueryBuilder('a')
+			->innerJoin('a.fotoComponents', 'ac2', Expr\Join::WITH, '(ac2.foto = a AND ac2.component = :component)')
+			->leftJoin('a.fotoComponents', 'ac')
+			->setParameter('component', $component)
+			->getQuery()->getResult()
+		;
+	}
+	
+	/*
+	 * envio un objecto, lo busco como componente y devuelvo sus fotos
+	 */
+	public function labeled($object)
+	{
+	//	$repository = $this->objectManager->getRepository($class);		
+	//	$usuario = $repository->findOneById(2);		
+		$component       = $this->findOrCreateComponent($object);
+		return $this->getQueryBuilderForComponent($component);
+
+	}
 	
 	protected function getComponentRepository()
 	{
 		return $this->objectManager->getRepository($this->componentClass);
+	}
+	
+	public function getUser($id)
+	{
+		return $this->get('ant_foto.userService')->findUserById($id);
 	}
 	
 }

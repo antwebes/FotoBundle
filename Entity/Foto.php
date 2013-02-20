@@ -3,8 +3,8 @@
 namespace ant\FotoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Doctrine\Common\Collections\ArrayCollection;
 
 
 abstract class Foto implements FotoInterface {
@@ -44,10 +44,7 @@ abstract class Foto implements FotoInterface {
 	 * @Assert\DateTime
 	 */
 	protected $updatedAt;
-	/**
-	 * @var array
-	 */
-	protected $fotoComponents;
+	
 	/**
 	 * @Assert\File(
 	 *     maxSize="2000k",
@@ -70,6 +67,10 @@ abstract class Foto implements FotoInterface {
 	 * @ORM\Column(type="string", length=255, name="titulo", nullable=true)
 	 */
 	protected $titulo;
+	/**
+	 * @var array
+	 */
+	protected $fotoComponents;
 	
 	public function __toString(){
 		return $this->imageName;
@@ -77,6 +78,9 @@ abstract class Foto implements FotoInterface {
 	public function __construct()
 	{
 		$this->fecha_publicacion = new \DateTime('now');
+		$this->fotoComponents = new ArrayCollection();
+		//$this->fotoComponents = new ArrayCollection("pablo");
+		$this->verb = 'foto';
 	}
 	/**
 	 * {@inheritdoc}
@@ -100,6 +104,7 @@ abstract class Foto implements FotoInterface {
 	 */
 	public function addComponent($type, $component, $fotoComponentClass)
 	{
+		
 		$fotoComponent = new $fotoComponentClass();
 		$fotoComponent->setType($type);
 	
@@ -110,9 +115,7 @@ abstract class Foto implements FotoInterface {
 		} else {
 			throw new \InvalidArgumentException('Component has to be a ComponentInterface or a scalar');
 		}
-	
 		$this->addFotoComponent($fotoComponent);
-	
 		return $this;
 	}
 	/**
@@ -120,26 +123,20 @@ abstract class Foto implements FotoInterface {
 	 */
 	public function addFotoComponent(FotoComponentInterface $fotoComponent)
 	{
+	
 		$fotoComponent->setFoto($this);
 		$type = $fotoComponent->getType();
-	
 		foreach ($this->getFotoComponents() as $key => $ac) {
 			if ($ac->getType() == $type) {
 				unset($this->fotoComponents[$key]);
 			}
-		}
-	
+		}	
+		
 		$this->fotoComponents[] = $fotoComponent;
 	
 		return $this;
 	}
-	/**
-	 * @return array
-	 */
-	public function getFotoComponents()
-	{
-		return $this->fotoComponents;
-	}
+	
 	/**
 	 * Get id
 	 *

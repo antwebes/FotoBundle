@@ -35,7 +35,7 @@ interface FotoComponentInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function setComponent(Component $component);
+	public function setComponent(ComponentInterface $component);
 	
 	/**
 	 * {@inheritdoc}

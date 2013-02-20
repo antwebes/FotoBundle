@@ -23,14 +23,17 @@ class FotoController extends Controller
     	$fotoManager = $this->get('ant_foto.foto_manager');
     	$foto = $fotoManager->findFotoBy(array('id'=>$id));
     	//fotoComponent
-    	$usuario = $this->get('security.context')->getToken()->getUser();
-    	$fotoManager = $this->get('ant_foto.action_manager.orm');
-    	$subject       = $fotoManager->findOrCreateComponent($usuario);
-    	$foto = $fotoManager->create($subject, 'foto', array('directComplement' => $foto));
-    	$fotoManager->updateAction($foto);
-    	ldd($usuario);
-    	//fin FotoComponent
-        return array('foto' => $foto);
+    	$em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('UsuarioBundle:User')->findOneById(2);
+        $fotoManager = $this->get('ant_foto.action_manager.orm');
+       // $u       = $fotoManager->findOrCreateComponent($usuario);
+        $f       = $fotoManager->labeled($usuario);
+	   // $f = $fotoManager->getQueryBuilderForComponent($u);
+	        		
+	        		//create($foto, 'foto', array('directComplement' => $usuario, 'indirectComplement' => $u ));
+
+        //fin FotoComponent
+        return array('foto' => $foto, 'fotos'=>$f);
     }
     /**
      * @Rest\View
@@ -94,6 +97,13 @@ class FotoController extends Controller
     			$foto->setUsuario($u);
     			$em->persist($foto);
         		$em->flush();
+        		//fotoComponent
+        		$usuario = $em->getRepository('UsuarioBundle:User')->findOneById(2);
+        		$fotoManager = $this->get('ant_foto.action_manager.orm');
+        		//$subject       = $fotoManager->findOrCreateComponent($usuario);
+        		$foto = $fotoManager->create($foto, 'foto', array('directComplement' => $usuario, 'indirectComplement' => $u ));
+        		$fotoManager->updateAction($foto);
+        		//fin FotoComponent
         		//lanzamos un evento
         		$dispatcher = $this->container->get('event_dispatcher');        		
         		$dispatcher->dispatch(AntFotoEvents::POST_PUBLISH, new FotoEvent($foto));

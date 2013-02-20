@@ -8,7 +8,7 @@
  {% endblock %}
 
 {% block body_container_main %}
-<center><h1>Estas son las fotos publicadas por {{ usuario }}</h1></center>
+<center><h1>Estas son las fotos en las que has sido etiquetado</h1></center>
 <hr>
 <div id="wrapper">
 <div id="columns">
@@ -23,9 +23,16 @@
         
 </div>
 {% else %}
-	Este usuario no ha publicado ninguna foto por el momento.
+	No te han etiquetado en ninguna foto
 {% endfor %}
 </div>
 </div>
 
+{% endblock %}
+
+{% block body_js_final %}
+	{% javascripts '@AntFotoBundle/Resources/public/js/vendor/bootbox.js' %}
+		<script src="{{ asset_url }}"></script>
+		{{ parent() }}   
+	{% endjavascripts %}
 {% endblock %}
