@@ -98,7 +98,8 @@ class FotoController extends Controller
     			$em->persist($foto);
         		$em->flush();
         		//fotoComponent
-        		$usuario = $em->getRepository('UsuarioBundle:User')->findOneById(2);
+        		$usuario = $this->get('ant_foto.user_manager')->findUserBy(array('id'=>2));
+        		//$usuario = $em->getRepository('UsuarioBundle:User')->findOneById(2);
         		$fotoManager = $this->get('ant_foto.action_manager.orm');
         		//$subject       = $fotoManager->findOrCreateComponent($usuario);
         		$foto = $fotoManager->create($foto, 'foto', array('directComplement' => $usuario, 'indirectComplement' => $u ));
@@ -112,7 +113,23 @@ class FotoController extends Controller
     	}
     	return array('form' => $form->createView());
     }
-    
+    /**
+     * @Rest\View(statusCode=204)
+     */
+    public function labelAction($id, $userId){
+    	
+    	//Yo debo crear el componente si es que no existe
+    	//Asignar a esta foto ese componente
+    	
+    	$em = $this->getDoctrine()->getManager();
+    	$foto = $em->getRepository('FotoBundle:Foto')->findOneById($id);
+    	$usuario = $this->get('ant_foto.user_manager')->findUserBy(array('username'=>$userId));
+    	$fotoManager = $this->get('ant_foto.action_manager.orm');
+    	$foto = $fotoManager->create($foto, 'foto', array('directComplement' => $usuario));
+    	$fotoManager->updateAction($foto);
+    	
+    	return array("estado" => "etiquetado");
+    }
     
     /**
      * @Rest\View(statusCode=204)

@@ -10,22 +10,21 @@ Step3: Configuration
 	    db_driver: orm
 	    object_manager: doctrine.orm.entity_manager
 	    
-::
-
+	    
 app/config/routing.yml
-
+	    
+::
     ant_foto_bundle:
     resource: "@AntFotoBundle/Resources/config/routing.yml"
     
 Basic Usage
 ===========
 
-Recuperate the photos which has a usuario how component.
+Recuperate the photos which has a usuario how component. You can include this code in your controller.
+Return $f, the photos where user $u was labeled.
 
 ::
-    	$em = $this->getDoctrine()->getManager();
-        $usuario = $em->getRepository('UsuarioBundle:User')->findOneById(2);
-        $fotoManager = $this->get('ant_foto.action_manager.orm');
-       	$u       = $fotoManager->findOrCreateComponent($usuario);
-        $f = $fotoManager->getQueryBuilderForComponent($u);
-        
+
+	$u = $this->get('ant_foto.user_manager')->findUserBy(array('id'=>$id));
+	$fotoManager = $this->get('ant_foto.action_manager.orm');
+	$f       = $fotoManager->labeled($u);

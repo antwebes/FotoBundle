@@ -34,6 +34,5 @@ class AlbumController extends Controller
     	$fotoManager = $this->get('ant_foto.action_manager.orm');
     	$f       = $fotoManager->labeled($u);
     	return array('fotos'=>$f);
-    }
-   
+    }   
 }

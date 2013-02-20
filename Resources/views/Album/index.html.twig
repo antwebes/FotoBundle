@@ -52,8 +52,8 @@
 <div class="row-fluid">
 	<div class="span12" style="margin-top:2em;">
 	<div class="alert alert-block">
-    <h4>Aún no has compartido ninguna foto</h4>
-    ¿A que esperas? Seguro que tienes alguna foto de un evento para compartir.
+	    <h4>Aún no has compartido ninguna foto</h4>
+	    ¿A que esperas? Seguro que tienes alguna foto de un evento para compartir.
     </div>
    </div>
 </div>
@@ -80,8 +80,8 @@
                 bootbox.confirm("¿Está seguro de que desea eliminar esta foto?<br /><br /><center><img src=\""+ foto.attr("src")+"\" width=\"120px\" /></center>", function(confirmed) {
                     if(confirmed) {
             			$.ajax({
+            			  type: "DELETE",
                 		  dataType: "json",
-          				  type: "DELETE",
           				  url: foto_url
           				}).done(function( msg ) {
           					$("#pin"+id).hide();

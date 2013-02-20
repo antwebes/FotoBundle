@@ -14,7 +14,14 @@ foto_edit:
     requirements:
         _method: PUT
         id: "\d+"
-         
+        
+ant_foto_foto_label:
+    pattern: /foto/label/{id}/{userId}
+    defaults: { _controller: AntFotoBundle:Foto:label}
+    requirements:
+        _method: PUT
+        id: "\d+"
+        
 publicar_foto:
     pattern: /foto/
     defaults: { _controller: AntFotoBundle:Foto:upload }
