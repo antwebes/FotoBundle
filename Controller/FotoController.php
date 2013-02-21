@@ -98,12 +98,12 @@ class FotoController extends Controller
     			$em->persist($foto);
         		$em->flush();
         		//fotoComponent
-        		$usuario = $this->get('ant_foto.user_manager')->findUserBy(array('id'=>2));
+        		//$usuario = $this->get('ant_foto.user_manager')->findUserBy(array('id'=>2));
         		//$usuario = $em->getRepository('UsuarioBundle:User')->findOneById(2);
-        		$fotoManager = $this->get('ant_foto.action_manager.orm');
+        		//$fotoManager = $this->get('ant_foto.action_manager.orm');
         		//$subject       = $fotoManager->findOrCreateComponent($usuario);
-        		$foto = $fotoManager->create($foto, 'foto', array('directComplement' => $usuario, 'indirectComplement' => $u ));
-        		$fotoManager->updateAction($foto);
+        		//$foto = $fotoManager->create($foto, 'foto', array('directComplement' => $usuario, 'indirectComplement' => $u ));
+        		//$fotoManager->updateAction($foto);
         		//fin FotoComponent
         		//lanzamos un evento
         		$dispatcher = $this->container->get('event_dispatcher');        		
