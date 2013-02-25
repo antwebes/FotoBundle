@@ -4,12 +4,15 @@
 <div class="container-fluid">
 	<div class="span10">
 		<img src="{{ vich_uploader_asset(foto, 'image') }}" class="fotoalbum" />
+		{% include "AntFotoBundle:Compartido:pinterest.html.twig" %}
 	</div>
 	<div class="span2">
 			Aquí van comentario y demás historias.
+{% if app.user == foto.usuario %}
 		<p>Etiqueta a tus amigos</p>
 		<input type="text" value="amigo" id="etiquetar">
-		<a class="edit" data-id="{{ foto.id }}">Etiquetar</a>		
+		<a class="edit" data-id="{{ foto.id }}">Etiquetar</a>
+{% endif %}		
 	</div>
 </div>
 <hr>
