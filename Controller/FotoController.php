@@ -22,18 +22,8 @@ class FotoController extends Controller
     {    	
     	$fotoManager = $this->get('ant_foto.foto_manager');
     	$foto = $fotoManager->findFotoBy(array('id'=>$id));
-    	//fotoComponent
-    	$em = $this->getDoctrine()->getManager();
-        $usuario = $em->getRepository('UsuarioBundle:User')->findOneById(2);
-        $fotoManager = $this->get('ant_foto.action_manager.orm');
-       // $u       = $fotoManager->findOrCreateComponent($usuario);
-        $f       = $fotoManager->labeled($usuario);
-	   // $f = $fotoManager->getQueryBuilderForComponent($u);
-	        		
-	        		//create($foto, 'foto', array('directComplement' => $usuario, 'indirectComplement' => $u ));
-
-        //fin FotoComponent
-        return array('foto' => $foto, 'fotos'=>$f);
+    	
+        return array('foto' => $foto);
     }
     /**
      * @Rest\View
