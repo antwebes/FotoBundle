@@ -22,8 +22,16 @@ class FotoController extends Controller
     {    	
     	$fotoManager = $this->get('ant_foto.foto_manager');
     	$foto = $fotoManager->findFotoBy(array('id'=>$id));
+    	$em = $this->getDoctrine()->getManager();
+    	$components = $em->getRepository('AntFotoBundle:FotoComponent')->findComponent($id);
     	
-        return array('foto' => $foto);
+    	foreach ( $components as $c){
+    		$component = $c->getComponent();
+    		$model = $component->getModel();
+    		$identifier = $component->getIdentifier();
+    		$object[] = $this->getDoctrine()->getRepository($model)->findOneById($identifier);
+    	}
+        return array('foto' => $foto, 'usuarios' => $object);
     }
     /**
      * @Rest\View
@@ -38,7 +46,7 @@ class FotoController extends Controller
     public function editarAction(Foto $foto) {
     		$request = $this->getRequest();
 
-    		$em = $this->getDoctrine()->getManager();
+    		$em = $this->ggetQueryBuilderForComponentetDoctrine()->getManager();
     		$foto->setTitulo(htmlspecialchars($request->get("titulo")));
     		$em->persist($foto);
     		$em->flush();
@@ -114,7 +122,7 @@ class FotoController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$foto = $em->getRepository('FotoBundle:Foto')->findOneById($id);
     	$usuario = $this->get('ant_foto.user_manager')->findUserBy(array('username'=>$userId));
-    	$fotoManager = $this->get('ant_foto.action_manager.orm');
+    	$fotoManager = $this->get('ant_foto.abstract_foto_manager.orm');
     	$foto = $fotoManager->create($foto, 'foto', array('directComplement' => $usuario));
     	$fotoManager->updateAction($foto);
     	

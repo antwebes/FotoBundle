@@ -236,30 +236,44 @@ class AbstractFotoManager
 		$this->objectManager->persist($foto);
 		$this->objectManager->flush();
 	}
+	protected function getQueryBuilderForSubject(ComponentInterface $subject)
+	{
+		return $this->getQueryBuilderForComponent($subject, 'subject');
+	}
 	/**
-	 * {@inheritdoc}
-	 */
-	public function getQueryBuilderForComponent(ComponentInterface $component){
+	* @param ComponentInterface $component component
+	* @param string $type type
+	*
+	* @return QueryBuilder
+	*/
+	public function getQueryBuilderForComponent(ComponentInterface $component, $type = null){
 	
-		return $this->objectManager
+		$qb =  $this->objectManager
 			->getRepository($this->fotoClass)
-			->createQueryBuilder('a')
-			->innerJoin('a.fotoComponents', 'ac2', Expr\Join::WITH, '(ac2.foto = a AND ac2.component = :component)')
-			->leftJoin('a.fotoComponents', 'ac')
-			->setParameter('component', $component)
-			->getQuery()->getResult()
+			->createQueryBuilder('a');
+		
+		if (null === $type) {
+			$qb->innerJoin('a.fotoComponents', 'ac2', Expr\Join::WITH, '(ac2.foto = a AND ac2.component = :component)');
+		} else {
+			$qb->innerJoin('a.fotoComponents', 'ac2', Expr\Join::WITH, '(ac2.foto = a AND ac2.component = :component and ac2.type = :type)')
+			->setParameter('type', $type);
+		}
+		
+		return $qb
+		->leftJoin('a.fotoComponents', 'ac')
+		->setParameter('component', $component)
 		;
+		
+		
 	}
 	
 	/*
 	 * envio un objecto, lo busco como componente y devuelvo sus fotos
 	 */
 	public function labeled($object)
-	{
-	//	$repository = $this->objectManager->getRepository($class);		
-	//	$usuario = $repository->findOneById(2);		
+	{	
 		$component       = $this->findOrCreateComponent($object);
-		return $this->getQueryBuilderForComponent($component);
+		return $this->getQueryBuilderForComponent($component)->getQuery()->getResult();
 
 	}
 	

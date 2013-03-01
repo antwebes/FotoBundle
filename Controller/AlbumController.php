@@ -31,8 +31,9 @@ class AlbumController extends Controller
     {
     	$u = $this->get('ant_foto.user_manager')->findUserBy(array('id'=>$id));
     	//$usuario = $em->getRepository('UsuarioBundle:User')->findOneById(2);
-    	$fotoManager = $this->get('ant_foto.action_manager.orm');
+    	$fotoManager = $this->get('ant_foto.abstract_foto_manager.orm');
     	$f       = $fotoManager->labeled($u);
+    	
     	return array('fotos'=>$f);
     }   
 }

@@ -17,7 +17,7 @@
         <service id="ant_foto.entity_manager" factory-service="doctrine" factory-method="getManager" class="Doctrine\ORM\EntityManager" public="true">
             <argument>%ant_foto.model_manager_name%</argument>
         </service>
-        <service id="ant_foto.action_manager.orm" class="ant\FotoBundle\Doctrine\AbstractFotoManager">
+        <service id="ant_foto.abstract_foto_manager.orm" class="ant\FotoBundle\Doctrine\AbstractFotoManager">
             <argument type="service" id="ant_foto.driver.object_manager" />
             <argument>%ant_foto.foto_class%</argument>
             <argument>ant\FotoBundle\Entity\Component</argument>

@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="ant_foto_foto_component")
+ * @ORM\Entity(repositoryClass="ant\FotoBundle\Entity\FotoComponentRepository")
  */
 class FotoComponent implements FotoComponentInterface
 {

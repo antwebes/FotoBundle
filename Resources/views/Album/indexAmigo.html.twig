@@ -10,6 +10,7 @@
 {% block body_container_main %}
 <center><h1>Estas son las fotos publicadas por {{ usuario }}</h1></center>
 <hr>
+<p><a href="{{path('ant_foto_album_labeled', {'id':usuario.id})}}">Ver fotos en las que {{ usuario }} sido etiquetado.</a>
 <div id="wrapper">
 <div id="columns">
 {% for foto in fotos %}
