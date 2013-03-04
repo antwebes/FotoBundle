@@ -15,16 +15,18 @@
 	</div>
 	<div class="span3">
 	<p>Publicada por <a href="{{ path('perfil_amigo',{username:foto.usuario.username}) }}">{{ foto.usuario }}</a> el {{ foto.fechaPublicacion | date }}</p>
-	<p>Con
-	{% for usuario in usuarios  %}
-		{% if loop.first %}
-			<a href="{{path('perfil_amigo', {username:usuario.username})}}">{{ usuario }}</a>
-		{% elseif not loop.last %}
-			, <a href="{{path('perfil_amigo', {username:usuario.username})}}">{{ usuario }}</a> 
-		{% else %}
-			y <a href="{{path('perfil_amigo', {username:usuario.username})}}">{{ usuario }}</a> .
-		{% endif %}
-	{% endfor %}</p>
+	{% if usuarios is not empty %}
+		<p>Con
+		{% for usuario in usuarios  %}
+			{% if loop.first %}
+				<a href="{{path('perfil_amigo', {username:usuario.username})}}">{{ usuario }}</a>
+			{% elseif not loop.last %}
+				, <a href="{{path('perfil_amigo', {username:usuario.username})}}">{{ usuario }}</a> 
+			{% else %}
+				y <a href="{{path('perfil_amigo', {username:usuario.username})}}">{{ usuario }}</a> .
+			{% endif %}
+		{% endfor %}</p>
+	{% endif %}
 {% if app.user == foto.usuario %}
 		<p>Etiqueta a tus amigos</p>
 		<input type="text" value="amigo" id="etiquetar">

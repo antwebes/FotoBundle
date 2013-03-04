@@ -24,12 +24,13 @@ class FotoController extends Controller
     	$foto = $fotoManager->findFotoBy(array('id'=>$id));
     	$em = $this->getDoctrine()->getManager();
     	$components = $em->getRepository('AntFotoBundle:FotoComponent')->findComponent($id);
-    	
+    	$object = array();
     	foreach ( $components as $c){
     		$component = $c->getComponent();
     		$model = $component->getModel();
     		$identifier = $component->getIdentifier();
     		$object[] = $this->getDoctrine()->getRepository($model)->findOneById($identifier);
+    		ldd($object);
     	}
         return array('foto' => $foto, 'usuarios' => $object);
     }
