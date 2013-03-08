@@ -30,7 +30,6 @@ class FotoController extends Controller
     		$model = $component->getModel();
     		$identifier = $component->getIdentifier();
     		$object[] = $this->getDoctrine()->getRepository($model)->findOneById($identifier);
-    		ldd($object);
     	}
         return array('foto' => $foto, 'usuarios' => $object);
     }

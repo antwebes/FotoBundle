@@ -3,15 +3,21 @@
 {% block head_css %}
           {% stylesheets '@AntFotoBundle/Resources/public/css/vendor/jquery-ui-1.9.1.custom.min.css'%}
           		{{ parent() }}
-            <link rel="stylesheet"  href="{{ asset_url }}" >
+            <link rel="stylesheet"  href="{{ asset_url }}" >           
           {% endstylesheets %}
-       {% endblock %}
+           {{ parent() }}
+           <link rel="stylesheet" href="{{ asset('bundles/sdfs/css/comment.css')}}" type="text/css">
+{% endblock %}
 
 {% block body_container_center %}
 <div class="container-fluid">
 	<div class="span9">
 		<img src="{{ vich_uploader_asset(foto, 'image') }}" class="fotoalbum" />
 		{% include "AntFotoBundle:Compartido:pinterest.html.twig" %}
+		{% block comments %}
+			{% include "AntFotoBundle:Compartido:comentario.html.twig" with {'prefijo': 'foto'} %}
+		{% endblock comments %}
+		
 	</div>
 	<div class="span3">
 	<p>Publicada por <a href="{{ path('perfil_amigo',{username:foto.usuario.username}) }}">{{ foto.usuario }}</a> el {{ foto.fechaPublicacion | date }}</p>
