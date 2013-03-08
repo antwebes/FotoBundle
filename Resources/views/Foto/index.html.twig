@@ -12,6 +12,8 @@
 {% block body_container_center %}
 <div class="container-fluid">
 	<div class="span9">
+		<h1>{{ foto.titulo }}</h1>
+		<hr/>
 		<img src="{{ vich_uploader_asset(foto, 'image') }}" class="fotoalbum" />
 		{% include "AntFotoBundle:Compartido:pinterest.html.twig" %}
 		{% block comments %}
