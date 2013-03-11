@@ -9,7 +9,7 @@ use sdfs\sdfsBundle\Entity\Comment;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-class CommentFotoController extends Controller
+class ComentarioFotoController extends Controller
 {	
 	public function ultimoComentarioAction(){
 		$em = $this->get('doctrine')->getEntityManager();
