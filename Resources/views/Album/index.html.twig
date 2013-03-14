@@ -13,7 +13,9 @@
 		<div class="row-fluid">
 		  <div class="span10">
 		  	<center><h1>Este es tu album de fotos.</h1> Puedes publicar una foto desde aquí.</center>
+		  	{% if app.user %}
 		  	<p><a href="{{path('ant_foto_album_labeled', {'id':app.user.id})}}">Ver fotos en las que has sido etiquetado.</a>
+		  	{% endif %}
 			</p>
 		  </div>
 		  <div class="span2">

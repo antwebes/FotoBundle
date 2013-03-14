@@ -35,7 +35,7 @@ class ComentarioFotoController extends Controller
 		}
 		$comments = $this->container->get('fos_comment.manager.comment')->findCommentTreeByThread($thread);
 		 
-		$response = $this->render('sdfsBundle:Comentario:comentario.html.twig' , array(
+		$response = $this->render('AntFotoBundle:Comentario:comentario.html.twig' , array(
 				'comments' => $comments,
 				'thread' => $thread,
 		));	

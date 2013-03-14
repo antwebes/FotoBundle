@@ -4,9 +4,7 @@
 <div class="container-fluid">
 <div class="span10">
 	<img src="{{ asset( 'uploads/perfil/' ) }}{{ path }}.jpeg" width="100%" class="fotoalbum"/>
-	{% block comments %}
-		{% include "AntFotoBundle:Compartido:comentario.html.twig" with {'prefijo':'fotopath'} %}
-	{% endblock comments %}
+	
 </div>
 <div class="span2">
 		Aquí van comentario y demás historias.
