@@ -77,11 +77,10 @@
 			$(".elim").click(function(){
 			var id =$(this).data("id");	
 			var foto_url = "{{ app.request.uriForPath('/foto/')}}" + id;
-			var foto = $("#foto"+id);	
-
+			var foto = $("#foto"+id);
                 bootbox.confirm("¿Está seguro de que desea eliminar esta foto?<br /><br /><center><img src=\""+ foto.attr("src")+"\" width=\"120px\" /></center>", function(confirmed) {
-                    if(confirmed) {
-            			$.ajax({
+                    if(confirmed) {                        
+            			$.ajax({            			
             			  type: "DELETE",
                 		  dataType: "json",
           				  url: foto_url
@@ -101,10 +100,10 @@
 	                    if(result) {
 	            			$.ajax({
 	          				  type: "PUT",
+	          				  dataType: "json",
 	          				  url: foto_url,
-	          				  data: {foto: {titulo: result}}
+	          				  data: {titulo: result}
 	          				}).done(function( msg ) {
-		          				console.log(msg);
 	          					$("#ftit"+id).html(msg.foto.titulo);
 	          					//$("#pin"+id).remove();
 	          				});

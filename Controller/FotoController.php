@@ -42,17 +42,21 @@ class FotoController extends Controller
     }
     
     
-    
-    public function editarAction(Foto $foto) {
+    /**
+     * @Rest\View
+     */
+    public function editarAction($id) {
+    	
+	    	$fotoManager = $this->get('ant_foto.foto_manager');
+	    	$foto = $fotoManager->findFotoBy(array('id'=>$id));
     		$request = $this->getRequest();
 
-    		$em = $this->ggetQueryBuilderForComponentetDoctrine()->getManager();
+    		$em = $this->getDoctrine()->getManager();
     		$foto->setTitulo(htmlspecialchars($request->get("titulo")));
     		$em->persist($foto);
-    		$em->flush();
-  
+    		$em->flush();  
     	
-    	return array("foto" => $foto);
+    	return array('foto' => $foto);
     }
     
     /**
@@ -132,8 +136,9 @@ class FotoController extends Controller
     /**
      * @Rest\View(statusCode=204)
      */
-    public function deleteAction(Foto $foto){
-    	
+    public function deleteAction($id){
+    	$fotoManager = $this->get('ant_foto.foto_manager');
+    	$foto = $fotoManager->findFotoBy(array('id'=>$id));
     	$em = $this->get('doctrine')->getEntityManager();    	
     	$em->remove($foto);
     	$em->flush();
