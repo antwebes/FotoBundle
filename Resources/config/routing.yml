@@ -37,7 +37,7 @@ album:
     pattern: /album
     defaults: { _controller: AntFotoBundle:Album:index }
 album_amigo:
-    pattern: /{username}/album
+    pattern: /usuario/{username}/album
     defaults: { _controller: AntFotoBundle:Album:indexAmigo }
 ant_foto_album_labeled:
     pattern: /{id}/labeled
